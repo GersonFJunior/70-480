@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Status</title>
+    <meta charset="utf-8" />
+	<style>
+	form {
+		margin: 20px 0;
+	}
+	</style>
+</head>
+<body onload="updateIndicator()" ononline="updateIndicator()" onoffline="updateIndicator()">
+  <p>Você esta: <span id="indicator">(state unknown)</span>
+</body>
+
+<script>
+function updateIndicator() {
+ document.getElementById('indicator').textContent = navigator.onLine ? 'online' : 'offline';
+}
+</script>

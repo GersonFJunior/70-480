@@ -1,0 +1,21 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <input type="button" value="Funcao Global" onclick="funcoesGlobais();"/>
+</body>
+</html>
+
+<script>
+    function funcoesGlobais() {
+        var radius = 100 * Math.random();
+        var circumference = 2 * Math.PI * radius;
+        var area = Math.PI * Math.pow(radius, 2);
+
+        alert(area);
+    }
+</script>

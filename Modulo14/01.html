@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html>
+<body>
+	<input id="start" type="button" value="Start" />
+    <input id="liberado" type="button" value="Liberado pra clicar" />
+    <div id="status">Preparando...</div>
+
+<script type="javascript/worker">
+    postMessage('Só começar....');
+
+    onmessage = function(e) {
+        if (e.data === 'start') {
+            
+            var max = 500000000;
+            for (var i = 0; i < max; i++) {
+                if ((i % 100000) === 0) postMessage('Progress: ' + (i / max * 100).toFixed(0) + '%');
+            }
+            postMessage('Done!');
+        }
+    };
+</script>
+</body>
+<script>
+    function getInlineJS() {
+        var js = document.querySelector('[type="javascript/worker"]').textContent;
+        var blob = new Blob([js], { "type": "text\/plain" });
+        return URL.createObjectURL(blob);
+    }
+
+    var ww = new Worker(getInlineJS());
+
+    ww.onmessage = function (e) {
+
+        var msg = e.data;
+
+        document.getElementById('status').innerHTML = msg;
+
+        if (msg === 'Feito!') alert('Próximo Quando quiser');
+    };
+
+    document.getElementById('start').addEventListener('click', start, false);
+
+    document.getElementById('liberado').addEventListener('click', msg, false);
+
+    function start() {
+        ww.postMessage('start');
+    }
+
+    function msg() {
+        alert("Liberado da thread");
+    }
+
+
+	</script>
+</html>
+
+ 

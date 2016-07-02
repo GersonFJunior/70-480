@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <input type="button"  value="GetSets" />
+</body>
+</html>
+
+<script>
+    var Pessoa = function (nome, idade) {
+        // Propriedades privadas.
+        var _nome, _idade;
+
+        // Metodos publicos para acessar as propriedades privadas
+        this.getNome = function () {
+            return _nome;
+        }
+        this.setNome = function (nome) {
+            _nome = nome;
+        }
+        this.getAge = function () {
+            return _age;
+        }
+        this.setIdade = function (idade) {
+            if (idade > 0 && idade < 100)
+                _idade = idade;
+        }
+        // Construtor logico.
+        _idade = idade;
+        this.setAge(idade);
+    }
+
+    Pessoa.prototype =
+    {
+        toString: function () {
+            return this.getNome() + " is " + this.getIdade();
+        }
+    }
+    
+    Usando
+    var p1 = new Pessoa("Joe", 21);
+    alert(p1.toString());
+    alert(p1._name);
+</script>

@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <input type="button" value="Objeto" />
+</body>
+</html>
+
+<script>
+    var Account = function (id, name) {
+        this.id = id;
+        this.name = name;
+        this.balance = 0;
+        this.numTransactions = 0;
+    };
+
+    var a = new Account(1, "Leandro");
+    var a2 = new Account(2, "Marcos");
+
+    Pessoa.prototype = {
+        deposit: function (amount) {
+            this.balance += amount;
+            this.numTransactions++;
+        },
+        withdraw: function(amount) {
+            this.balance -= amount;
+            this.numTransactions++;
+        },
+        displayDetails: function() {
+            alert(this.id + ", " +
+                  this.name + " balance $" +
+                  this.balance + " (" +
+                  this.numTransactions + " transactions)");
+        }
+    };
+
+    var acc1 = new Account(1, "Leandro");
+    var acc2 = new Account(1, "Leandro");
+    acc1.deposit(100);
+    acc1.displayDetails();
+    acc2.withdraw(50);
+    acc2.displayDetails();
+
+    var obj1 = Object.create(null, {
+        prop1: { value: "hello", writable: true }, 
+        prop2: { value: "world" }
+    });
+</script>

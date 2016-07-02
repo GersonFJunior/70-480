@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <input type="button" value="Namespace" />
+</body>
+</html>
+
+<script>
+    var MyNamespace = {
+
+        myFunction1: function () {
+            alert("funcao1");
+        },
+
+        myFunction2: function (nome) {
+            alert("Seu nome eh:" + nome);
+        },
+
+        message: "Ola mundo",
+
+        num: 42
+    }
+
+    MyNamespace.myFunction1;
+    MyNamespace.myFunction2("leandro");
+  
+</script>

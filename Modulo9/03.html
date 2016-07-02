@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Font-Face</title>
+    <meta charset="utf-8" />
+	<style>
+		form {
+    margin: 20px 0;
+}
+	</style>
+</head>
+<body>
+		 <h2 id="toc-final">TODO</h2>
+<ul id="todoItems"></ul>
+<input type="text" id="todo" name="todo" placeholder="O que preciso fazer ???" style="width: 200px;">
+<input type="submit" value="Add Todo Item" onclick="addTodo(); return false;">
+</body>
+</html>
+
+<script>
+    var todolist = {};
+    window.indexedDB = window.indexedDB || window.webkitIndexedDB ||
+                    window.mozIndexedDB;
+
+    if ('IndexedDB' in window) {
+      window.IDBTransaction = window.webkitIDBTransaction;
+      window.IDBKeyRange = window.webkitIDBKeyRange;
+    }
+
+    todolist.indexedDB = {};
+    todolist.indexedDB.db = null;
+
+    todolist.indexedDB.onerror = function(e) {
+      console.log(e);
+    };
+
+    //Criar uma conexão
+    todolist.indexedDB.open = function() {
+      var version = 1;
+      var request = indexedDB.open("todos", version);
+
+      request.onupgradeneeded = function(e) {
+        var db = e.target.result;
+
+        e.target.transaction.onerror = todolist.indexedDB.onerror;
+
+        if(db.objectStoreNames.contains("todo")) {
+          db.deleteObjectStore("todo");
+        }
+
+        var store = db.createObjectStore("todo",
+          {keyPath: "timeStamp"});
+      };
+
+      request.onsuccess = function(e) {
+        todolist.indexedDB.db = e.target.result;
+        todolist.indexedDB.getAllTodoItems();
+      };
+
+      request.onerror = todolist.indexedDB.onerror;
+    };
+
+
+    //ADD
+    todolist.indexedDB.addTodo = function(todoText) {
+      var db = todolist.indexedDB.db;
+      var trans = db.transaction(["todo"], "readwrite");
+      var store = trans.objectStore("todo");
+
+      var data = {
+        "text": todoText,
+        "timeStamp": new Date().getTime()
+      };
+
+      var request = store.put(data);
+
+      request.onsuccess = function(e) {
+        todolist.indexedDB.getAllTodoItems();
+      };
+
+      request.onerror = function(e) {
+        console.log("Error Adding: ", e);
+      };
+    };
+
+    //DELETE
+    todolist.indexedDB.deleteTodo = function(id) {
+      var db = todolist.indexedDB.db;
+      var trans = db.transaction(["todo"], "readwrite");
+      var store = trans.objectStore("todo");
+
+      var request = store.delete(id);
+
+      request.onsuccess = function(e) {
+        todolist.indexedDB.getAllTodoItems();
+      };
+
+      request.onerror = function(e) {
+        console.log("Error Adding: ", e);
+      };
+    };
+
+    //ListAll
+    todolist.indexedDB.getAllTodoItems = function() {
+      var todos = document.getElementById("todoItems");
+      todos.innerHTML = "";
+
+      var db = todolist.indexedDB.db;
+      var trans = db.transaction(["todo"], "readwrite");
+      var store = trans.objectStore("todo");
+
+      // Get everything in the store;
+      var keyRange = IDBKeyRange.lowerBound(0);
+      var cursorRequest = store.openCursor(keyRange);
+
+      cursorRequest.onsuccess = function(e) {
+        var result = e.target.result;
+        if(!!result == false)
+          return;
+
+        renderTodo(result.value);
+        result.continue();
+      };
+
+      cursorRequest.onerror = todolist.indexedDB.onerror;
+    };
+
+    function renderTodo(row) {
+      var todos = document.getElementById("todoItems");
+      var li = document.createElement("li");
+      var a = document.createElement("a");
+      var t = document.createTextNode(row.text);
+
+      a.addEventListener("click", function() {
+        todolist.indexedDB.deleteTodo(row.timeStamp);
+      }, false);
+
+      a.href = "#";
+      a.textContent = " [Excluir]";
+      li.appendChild(t);
+      li.appendChild(a);
+      todos.appendChild(li);
+    }
+
+    function addTodo() {
+      var todo = document.getElementById("todo");
+      todolist.indexedDB.addTodo(todo.value);
+      todo.value = "";
+    }
+
+    function init() {
+      todolist.indexedDB.open();
+    }
+
+    window.addEventListener("DOMContentLoaded", init, false);
+</script>

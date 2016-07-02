@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <input type="button"  value="Escopo" />
+</body>
+</html>
+
+<script>
+    var num = 7;
+
+    function escopo() {
+        if (true) {
+            var num = 42;
+        }
+        alert("Valor de num eh: " + num);
+    }
+    window.addEventListener("click", escopo);
+</script>

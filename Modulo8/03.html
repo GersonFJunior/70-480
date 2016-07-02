@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Teste de Audio</title>
+    <meta charset="utf-8" />
+	<style>
+		#playlist,audio{
+			background:#666;
+			width:400px;
+			padding:20px;
+		}
+		.active a{
+			color:#5DB0E6;
+			text-decoration:none;
+		}
+		li a{
+			color:#eeeedd;
+			background:#333;
+			padding:5px;
+			display:block;
+		}
+		li a:hover{
+			text-decoration:none;
+		}
+
+	</style>
+</head>
+<body>
+     
+    <h1>Testando audio com html5</h1>
+    <p>Simple example</p>
+	<div>
+		<audio id="audio" src="http://www.sousound.com/music/healing/healing_01.mp3" preload="auto"  ></audio>
+		<button id="play">Play</button>
+		<button id="stop">Stop</button>
+	</div>
+
+
+</body>
+</html>
+
+<script>
+var playBtn = document.getElementById('play');
+var stopBtn = document.getElementById('stop');
+
+var playSound = function() {
+	audio.play();
+};
+
+playBtn.addEventListener('click', playSound, false);
+
+stopBtn.addEventListener('click', function(){
+	audio.pause()
+}, false);
+
+
+
+</script>

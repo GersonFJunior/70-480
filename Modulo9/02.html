@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<script>
+    function clickCounter() {
+        if (typeof (Storage) !== "undefined") {
+            if (localStorage.clickcount) {
+                localStorage.clickcount = Number(localStorage.clickcount) + 1;
+            } else {
+                localStorage.clickcount = 1;
+            }
+            document.getElementById("result").innerHTML = "Você clicou " + localStorage.clickcount + " vezes.";
+        } else {
+            document.getElementById("result").innerHTML = "Sem suporte";
+        }
+    }
+</script>
+</head>
+<body>
+<p><button onclick="clickCounter()" type="button">OK</button></p>
+<div id="result"></div>
+</body>
+</html>

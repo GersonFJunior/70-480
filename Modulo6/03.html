@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>OutLine e Border</title>
+    <meta charset="utf-8" />
+	<style>
+	.box {
+	  margin: 20px;
+	  width: 100px;
+	  height: 100px;
+	  outline: 2px dashed blue;
+	  border: 2px solid red;
+	  background: hsla( 0, 100%, 50%, 0.1 );
+	  border-radius: 20px;
+	  float: left;
+	}
+
+	.box.beta {
+	  outline-offset: 10px;
+	}
+
+	.box.gamma {
+	  outline-offset: -10px;
+	}
+	</style>
+</head>
+<body>
+    <div class="box alpha"></div>
+	<div class="box beta"></div>
+	<div class="box gamma"></div>
+</body>
+</html>
